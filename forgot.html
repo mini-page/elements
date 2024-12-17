@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>Forgot Password</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .transition-all {
+            transition: all 0.3s ease-in-out;
+        }
+
+        .fade {
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 0.5s ease-in-out, max-height 0.5s ease-in-out;
+        }
+
+        .fade.show {
+            opacity: 1;
+            max-height: 20px;
+        }
+
+        .cross {
+            display: inline-block;
+            transition: all 0.9s ease-in;
+        }
+
+        #form-title {
+            transition: opacity 0.9s ease-in-out, transform 0.5s ease-in-out;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="px-2 pt-4 pb-2 bg-purple-200 shadow-lg rounded-3xl m-4 max-w-md w-full transition-all">
+
+        <!-- Header -->
+        <div class="flex items-center justify-between">
+            <h1 class="text-4xl ml-4 font-extrabold text-gray-900 cursor-pointer" onclick="redirectToHome()">
+                Gl<i class="fas fa-globe-americas text-gray-500"></i>be
+            </h1>
+            <i
+                class="cross fas fa-arrow-right font-bold text-xl w-10 h-10 mr-2 rounded-3xl bg-purple-400 text-center flex items-center justify-center cursor-pointer transition-all hover:rotate-180 hover:bg-purple-500 active:scale-90"></i>
+        </div>
+
+        <br>
+
+        <!-- Title & Description -->
+        <h2 id="form-title" class="text-center text-xl px-2 font-bold text-purple-700">Reset Your Password</h2>
+        <p id="form-description" class="px-3 text-center text-base text-gray-600 mt-2 show">
+            Enter your email to receive a password reset link.
+        </p>
+
+        <!-- Form Container -->
+        <div class="p-6 bg-white rounded-3xl mt-6 shadow-lg transition-all" id="form-container">
+            <form>
+                <div class="mb-4">
+                    <input id="email-input"
+                        class="w-full p-3 rounded-2xl bg-purple-200 focus:ring-2 focus:ring-purple-500 focus:outline-none placeholder-purple-500 placeholder:font-medium"
+                        type="email" placeholder="Enter your Email" name="email" required />
+                </div>
+                <button type="submit"
+                    class="w-full p-2 rounded-2xl bg-black text-white text-lg font-normal hover:bg-purple-800 transition-all">
+                    Send Reset Link
+                </button>
+            </form>
+            <p class="text-center mt-4 text-sm text-gray-600">
+                Back to
+                <a href="login.html" class="text-purple-600 font-semibold hover:underline">Login</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Redirect to home when title is clicked
+        function redirectToHome() {
+            window.location.href = "#"; // Update "#" to your desired link
+        }
+    </script>
+</body>
+
+</html>

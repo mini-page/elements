@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>Login Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .transition-all {
+            transition: all 0.3s ease-in-out;
+        }
+
+        .fade {
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 0.5s ease-in-out, max-height 0.5s ease-in-out;
+        }
+
+        .fade.show {
+            opacity: 1;
+            max-height: 20px;
+        }
+
+        .cross {
+            display: inline-block;
+            /* Ensures proper rotation behavior */
+            transition: all 0.9s ease-in;
+            /* Smooth transition */
+        }
+
+        /* Smooth transition for description text */
+        #form-title {
+            transition: opacity 0.9s ease-in-out, transform 0.5s ease-in-out;
+        }
+    </style>
+    <noscript>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+            }
+        </style>
+    </noscript>
+
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="px-2 pt-4 pb-2 bg-purple-200 shadow-lg rounded-3xl m-4 max-w-md w-full transition-all">
+
+        <!-- Header -->
+        <div class="flex items-center justify-between">
+            <!-- Title that acts like a link -->
+            <h1 class="text-4xl ml-4 font-extrabold text-gray-900 cursor-pointer" onclick="redirectToHome()">
+                Gl<i class="fas fa-globe-americas text-gray-500"></i>be
+            </h1>
+            <!-- Cross icon with rotation on hover -->
+            <i
+                class="cross fas fa-times font-bold text-xl w-10 h-10 mr-2 rounded-3xl bg-purple-400 text-center flex items-center justify-center cursor-pointer transition-all hover:rotate-90 hover:bg-purple-500 active:scale-90">
+            </i>
+        </div>
+
+        <br>
+
+        <!-- Title & Description -->
+        <h2 id="form-title" class=" text-center text-xl px-2 font-bold text-purple-700">Log into your Account</h2>
+        <!-- removed, but you can toggle this dialogue by removing "fade" class-->
+        <p id="form-description" class="fade text-center text-base text-gray-600 mt-2">Resume managing your cart</p>
+
+        <!-- Toggle Buttons -->
+        <div class="text-center pt-4">
+            <button class="rounded-full w-1/3 p-2 mx-auto font-semibold bg-black text-white transition-all"
+                id="login-btn" onclick="showLogin()">
+                Log in
+            </button>
+            <button class="rounded-full w-1/3 p-2 font-semibold text-black transition-all" id="signup-btn"
+                onclick="showSignup()">
+                Sign up
+            </button>
+        </div>
+
+        <!-- Form Container -->
+        <div class="p-6 bg-white rounded-3xl mt-6 shadow-lg transition-all" id="form-container">
+            <form>
+                <div class="mb-4">
+                    <label for="email-input" class="sr-only">Email</label>
+                    <input id="email-input"
+                        class="w-full p-3 rounded-2xl bg-purple-200 focus:ring-2 focus:ring-purple-500 focus:outline-none placeholder-purple-500 placeholder:font-medium"
+                        type="email" placeholder="Enter your Email" name="email" required />
+                </div>
+                <div class="mb-4" id="password-container">
+                    <div class="relative w-full">
+                        <!-- Eye icon to toggle password visibility -->
+                        <i id="toggle-password"
+                            class="fas fa-eye-slash absolute right-6 top-1/2 transform -translate-y-1/2 text-purple-600 cursor-pointer transition-all"></i>
+                        <label for="password-input" class="sr-only">Password</label>
+                        <input id="password-input"
+                            class="w-full p-3 rounded-2xl bg-purple-200 focus:ring-2 focus:ring-purple-500 focus:outline-none placeholder-purple-500 placeholder:font-medium"
+                            type="password" placeholder="Password Please" name="password" required />
+                    </div>
+                </div>
+
+                <!-- Remember Me and Forgot Password Link -->
+                <div class="text-right flex mb-6 sm:mb-8 fade show" id="forgot-password">
+                    <input type="checkbox" id="remember-me" class="custom-checkbox accent-purple-400 mr-1" />
+                    <label for="remember-me" class="mr-auto text-gray-700 text-sm cursor-pointer">Remember Me</label>
+                    <a href="forgot.html" class="text-sm ml-auto text-purple-600 hover:underline">Forgot Password?</a>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" id="form-submit"
+                    class="w-full p-2 rounded-2xl bg-black text-white text-lg font-normal hover:bg-purple-800 transition-all">
+                    Log in
+                </button>
+            </form>
+
+            <!-- Other Methods -->
+            <fieldset id="option" class="my-4 bg-gray-300 p-4 rounded-3xl">
+                <!-- "or" Label -->
+                <legend id="option-legend" class="text-gray-600 rounded-xl font-medium px-4 bg-white inline-block mx-auto">
+                    or Login using
+                </legend>
+
+                <!-- Social Media Buttons -->
+                <div class="text-center flex justify-around">
+                    <!-- Google Button -->
+                    <button
+                        class="flex items-center justify-center rounded-2xl w-1/4 sm:w-1/3 sm:mx-2 p-2 pl-3 font-semibold bg-white transition-all hover:bg-gray-200"
+                        id="google-btn" onclick="loginWithGoogle()">
+                        <i class="fab fa-google font-bold text-red-600  text-lg sm:text-blue-500"></i>
+                        <span class="hidden lg:inline sm:mr-auto ">
+                            <span class="text-red-500">o</span><span class="text-yellow-500">o</span><span
+                                class="text-blue-500">g</span><span class="text-green-500">l</span><span
+                                class="text-red-500">e</span>
+                        </span>
+                    </button>
+
+                    <!-- Facebook Button -->
+                    <button
+                        class="flex items-center justify-center rounded-2xl w-1/4 sm:w-1/3 sm:mx-2 p-2 font-semibold bg-blue-500 text-white transition-all hover:bg-blue-600"
+                        id="facebook-btn" onclick="loginWithFacebook()">
+                        <i class="fab fa-facebook-f text-white text-lg sm:pr-1"></i>
+                        <span class="hidden lg:inline sm:mr-auto">Facebook</span>
+                    </button>
+
+                    <!-- Phone Button -->
+                    <button
+                            class="flex items-center justify-center rounded-2xl w-1/4 sm:w-1/3 sm:mx-2 p-2 font-semibold bg-green-500 text-white transition-all hover:bg-green-600"
+                            id="phone-btn" onclick="loginWithPhone()">
+                            <i class="fas fa-phone text-white text-lg sm:pr-1"></i>
+                            <span class="hidden lg:inline sm:mr-auto">Number</span>
+                        </button>
+                </div>
+            </fieldset>
+
+            <p id="toggle-text" class="text-center mt-4 text-sm text-gray-600">
+                Don’t have an account?
+                <a href="#" class="text-purple-700 font-medium hover:underline" onclick="showSignup()">Sign up</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const formTitle = document.getElementById('form-title');
+        const formDescription = document.getElementById('form-description');
+        const formSubmit = document.getElementById('form-submit');
+        const forgotPassword = document.getElementById('forgot-password');
+        const toggleText = document.getElementById('toggle-text');
+        const passwordContainer = document.getElementById('password-container');
+        const passwordInput = document.getElementById('password-input');
+        const togglePasswordIcon = document.getElementById('toggle-password');
+        const loginBtn = document.getElementById('login-btn');
+        const signupBtn = document.getElementById('signup-btn');
+
+        // Redirect to home when title is clicked
+        function redirectToHome() {
+            window.location.href = "#"; // Update "#" to your desired link
+        }
+
+        // Toggle Password Visibility
+        togglePasswordIcon.addEventListener('click', () => {
+            const isPassword = passwordInput.type === 'password';
+            passwordInput.type = isPassword ? 'text' : 'password';
+            togglePasswordIcon.classList.toggle('fa-eye-slash', !isPassword);
+            togglePasswordIcon.classList.toggle('fa-eye', isPassword);
+        });
+
+        // Function to show login form
+        function showLogin() {
+            formTitle.textContent = 'Log into your Account';
+            formDescription.textContent = 'Resume managing your cart';
+            formSubmit.textContent = 'Log in';
+
+            // Change the legend text dynamically for login
+            document.getElementById('option-legend').textContent = 'or Login using';
+
+            // Smoothly transition description text
+            formDescription.style.opacity = 0;
+            setTimeout(() => {
+                formDescription.style.opacity = 1;
+            }, 100);
+
+            // Show Forgot Password link
+            forgotPassword.classList.add('show');
+
+            toggleText.innerHTML = `Don't have an account? <a href="#" class="text-purple-700 font-medium hover:underline" onclick="showSignup()">Sign up</a>`;
+            passwordContainer.style.display = 'block';
+
+            // Update button styles
+            loginBtn.classList.add('bg-black', 'text-white');
+            signupBtn.classList.remove('bg-black', 'text-white');
+        }
+
+        // Function to show signup form
+        function showSignup() {
+            formTitle.textContent = 'Create an Account';
+            formDescription.textContent = 'Join us and manage your cart';
+            formSubmit.textContent = 'Sign up';
+
+             // Change the legend text dynamically for sign up
+            document.getElementById('option-legend').textContent = 'or Sign up using';
+
+            // Smoothly transition description text
+            formDescription.style.opacity = 0;
+            setTimeout(() => {
+                formDescription.style.opacity = 1;
+            }, 100);
+
+            // Hide Forgot Password link
+            forgotPassword.classList.remove('show');
+
+            toggleText.innerHTML = `Already have an account? <a href="#" class="text-purple-700 font-medium hover:underline" onclick="showLogin()">Log in</a>`;
+            passwordContainer.style.display = 'block';
+
+            // Update button styles
+            signupBtn.classList.add('bg-black', 'text-white');
+            loginBtn.classList.remove('bg-black', 'text-white');
+        }
+
+
+        function loginWithGoogle() {
+            // Add your Google login functionality here
+            console.log("Login with Google");
+        }
+
+        function loginWithFacebook() {
+            // Add your Facebook login functionality here
+            console.log("Login with Facebook");
+        }
+
+        function loginWithPhone() {
+                window.location.href = "phone.html";
+            }
+
+    </script>
+    </script>
+</body>
+
+</html>
