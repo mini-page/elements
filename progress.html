@@ -1,0 +1,124 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Progress</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+    <style>
+        .progress-bar {
+            transition: all 0.5s linear;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Button hover effects */
+        .btn-green:hover {
+            background-color: #166534;
+        }
+
+        /* Success message fade-in effect */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-green-800 flex flex-col justify-center items-center min-h-screen">
+    <!-- Back Button (Fixed Issue with href) -->
+    <a href="index.html" aria-label="Go Back"
+        class="absolute top-4 left-4 rounded-full px-3 py-2 text-xl bg-green-600 text-white flex items-center transition duration-300 hover:bg-green-700">
+        <i class="fas fa-chevron-left font-bold transition-transform duration-300 hover:-rotate-180"></i>
+    </a>
+
+    <!-- Main Container -->
+    <div class="w-11/12 md:w-3/4 lg:w-1/2 p-6 bg-green-100 shadow-lg rounded-xl relative mx-4">
+
+        <!-- Top Buttons (Restart on Right) -->
+        <div class="flex justify-between items-center mb-4">
+            <button onclick="startDownload()" aria-label="Start Download"
+                class="bg-green-600 text-white font-bold py-2 px-6 rounded-full shadow-lg hover:bg-green-700 transition duration-300 flex items-center btn-green">
+                Start <i class="fas fa-download ml-2"></i>
+            </button>
+
+            <!-- Restart Button -->
+            <button onclick="restartDownload()" aria-label="Restart Download"
+                class="text-white bg-gray-800 p-2 rounded-full transition text-xl flex items-center hover:bg-gray-700">
+                <i class="fas fa-redo-alt font-bold transition duration-200 hover:rotate-180 transform origin-center flex items-center justify-center"></i>
+            </button>
+        </div>
+        
+        <!-- Progress Bar Container -->
+        <div class="w-11/12 md:w-4/5 lg:w-3/4 h-8 bg-white rounded-full overflow-hidden mx-auto border-2 border-gray-400">
+            <div class="progress-bar h-full bg-green-500 text-white flex items-center justify-center font-bold rounded-full transition-all duration-500"
+                id="progressBar" style="width: 0%;">0%</div>
+        </div>
+
+        <!-- Success Message -->
+        <div id="message"
+            class="hidden mt-6 py-3 bg-green-200 text-green-800 font-bold rounded-xl shadow-md fade-in relative flex items-center justify-between px-4">
+            <p>Successful</p>
+
+            <!-- Close Button (Fixed Alignment) -->
+            <button onclick="closeMessage()" aria-label="Close Success Message"
+                class="text-black py-1 px-2 rounded-full transition text-lg absolute right-3 top-1">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let progress = 0;
+        let interval;
+        const bar = document.getElementById("progressBar");
+        const message = document.getElementById("message");
+
+        function startDownload() {
+            // Reset progress and hide message
+            clearInterval(interval);
+            progress = 0;
+            message.classList.add('hidden');
+            bar.style.width = "0%";
+            bar.innerText = "0%";
+
+            interval = setInterval(() => {
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    message.classList.remove('hidden');
+                    message.classList.add('fade-in');
+                } else {
+                    progress += 5; // Smoother progress
+                    bar.style.width = progress + "%";
+                    bar.innerText = progress + "%";
+                }
+            }, 300); // Reduced interval for smoother UI updates
+        }
+
+        function restartDownload() {
+            clearInterval(interval);
+            startDownload();
+        }
+
+        function closeMessage() {
+            message.classList.add('hidden');
+        }
+    </script>
+
+</body>
+</html>
